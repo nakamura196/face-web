@@ -39,7 +39,13 @@ const fmtMB = (b: number) => (b / 1024 / 1024).toFixed(2);
 const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v));
 
 function toSpec(m: FaceModel): ModelSpec {
-  return { url: m.detect, kind: m.kind, conf: m.conf, imgsz: m.imgsz, modelId: m.id, modelName: m.detectName };
+  // 相対 URL (./models/…) は worker 内だと worker のパス基準で解決され 404 になるため、
+  // メインスレッドでページ基準の絶対 URL に解決してから worker に渡す。
+  const url =
+    m.detect && !/^https?:\/\//.test(m.detect)
+      ? new URL(m.detect, document.baseURI).href
+      : m.detect;
+  return { url, kind: m.kind, conf: m.conf, imgsz: m.imgsz, modelId: m.id, modelName: m.detectName };
 }
 
 /** 顔検出アプリ本体。このコンポーネントがマウントされた時だけ worker/モデルを初期化する。 */
