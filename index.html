@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>顔検出｜ブラウザ完結の顔検出（無料・WebGPU）</title>
+    <meta
+      name="description"
+      content="絵巻・浮世絵・近現代美人画などの資料画像から顔を検出。複数の検出モデルを切り替えて試せる。画像はサーバに送らずブラウザ内で完結（無料・WebGPU）。"
+    />
+    <link rel="canonical" href="https://nakamura196.github.io/face-web/" />
+    <meta name="theme-color" content="#0b8bee" />
+
+    <!-- アイコン / PWA -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <link rel="manifest" href="manifest.webmanifest" />
+
+    <!-- OGP / Twitter Card -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="顔検出" />
+    <meta property="og:title" content="顔検出｜ブラウザ完結の顔検出（無料・WebGPU）" />
+    <meta
+      property="og:description"
+      content="資料画像の顔を検出し、切り出して一覧化。画像は送らずブラウザ内で完結（無料・WebGPU）。"
+    />
+    <meta property="og:url" content="https://nakamura196.github.io/face-web/" />
+    <meta property="og:image" content="https://nakamura196.github.io/face-web/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="顔検出" />
+    <meta
+      name="twitter:description"
+      content="ブラウザ完結の顔検出。資料画像の顔を検出→一覧化（無料・WebGPU）。"
+    />
+    <meta name="twitter:image" content="https://nakamura196.github.io/face-web/og.png" />
+    <!-- sw.js: クロスオリジン隔離 (COOP/COEP) の注入 + アプリシェルキャッシュ (PWA)。
+         GitHub Pages はヘッダ設定不可のため、COI は SW でヘッダを付与して有効化する
+         (coi-serviceworker 方式を統合)。COEP は credentialless にして HF/CDN/フォント等の
+         外部リソース取得を維持。これで WASM マルチスレッドが使える (WebGPU は元々不要)。
+         初回訪問のみ、SW が制御を得た時点で 1 度だけリロードして isolation を反映する。 -->
+    <script>
+      (() => {
+        const sw = navigator.serviceWorker;
+        if (!sw || !window.isSecureContext) return;
+        if (sw.controller) sw.controller.postMessage({ type: "coepCredentialless", value: true });
+        let reloaded = false;
+        sw.addEventListener("controllerchange", () => {
+          if (reloaded || window.crossOriginIsolated) return;
+          reloaded = true;
+          window.location.reload();
+        });
+        sw.register("sw.js").catch(() => {});
+      })();
+    </script>
+
+    <!-- Google Analytics 4 (nakamura196 共通プロパティ) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-G0619D6ER0"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-G0619D6ER0");
+    </script>
+
+    <!-- UTokyo Visual Identity に倣った書体 (Noto Serif/Sans JP) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&family=Noto+Serif+JP:wght@600;700&display=swap"
+    />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

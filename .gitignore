@@ -1,0 +1,42 @@
+# deps / build
+node_modules/
+dist/
+*.tsbuildinfo
+
+# onnxruntime-web wasm assets (copied from node_modules by scripts/copy-ort.mjs)
+public/ort/
+
+# モデル: 巨大な YOLO 等は配信(HF)に任せてコミットしない。
+# ただし YuNet (227KB) はサイトに同梱して GitHub Pages で配信する。
+public/models/*
+!public/models/face_detection_yunet_2023mar.onnx
+
+# env / secret files
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+.npmrc
+
+# scratch / demo outputs (large PNG/GIF, not part of the app)
+demo-output/
+
+# 学習データ (史料編纂所くずし字データセット等。巨大なのでコミットしない)
+data/
+# モデル変換の出力
+out/
+
+# editor / OS
+.DS_Store
+.idea/
+.vscode/settings.json
+.claude/settings.local.json
+.vercel
+
+# python cache
+__pycache__/
+*.pyc

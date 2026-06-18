@@ -1,0 +1,17 @@
+{
+  "name": "顔検出",
+  "short_name": "顔検出",
+  "description": "絵巻・浮世絵・近現代美人画などの資料画像から顔を検出。複数の検出モデルを切り替えて試せます。すべてブラウザ内で完結します。",
+  "lang": "ja",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0b8bee",
+  "icons": [
+    { "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml" },
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}
