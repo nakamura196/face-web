@@ -141,4 +141,4 @@ export const ANNOUNCEMENTS: Announcement[] = [
 ];
 
 // 使い方チュートリアル動画 (YouTube)。空なら「使い方」導線は非表示。
-export const TUTORIAL_VIDEO_ID = "";
+export const TUTORIAL_VIDEO_ID = "cTyHGsp75dw";
