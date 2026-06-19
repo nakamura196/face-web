@@ -14,6 +14,7 @@ import { loadOrt } from "../lib/ort";
 import { loadModelBuffer } from "../lib/model-cache";
 import { setSession } from "../lib/ort-yolo";
 import { setYunetSession } from "../lib/yunet";
+import { setRetinaSession } from "../lib/retinaface";
 import { detect } from "../lib/segment";
 import type { FromWorker, ToWorker, ModelSpec } from "./protocol";
 
@@ -74,6 +75,7 @@ async function ensureResident(spec: ModelSpec): Promise<void> {
   }
 
   if (spec.kind === "yunet") setYunetSession(session);
+  else if (spec.kind === "retinaface") setRetinaSession(session);
   else setSession(session);
   resident[spec.kind] = spec.modelId;
   lastEp = ep;

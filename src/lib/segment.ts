@@ -6,6 +6,7 @@
  */
 import { detectRegion, nms, IMGSZ, type Drawable } from "./ort-yolo";
 import { detectYunet } from "./yunet";
+import { detectRetina } from "./retinaface";
 import type { Box, DetectResult, Mode } from "./types";
 import type { DetectorKind } from "./config";
 
@@ -52,6 +53,9 @@ export async function detect(
   if (opts.kind === "yunet") {
     const raw = await detectYunet(src, W, H, opts.conf, opts.imgsz);
     boxes = nms(raw, 0.3);
+  } else if (opts.kind === "retinaface") {
+    const raw = await detectRetina(src, W, H, opts.conf, opts.imgsz);
+    boxes = nms(raw, 0.4);
   } else {
     const raw = await detectRegion(src, 0, 0, W, H, {
       conf: opts.conf,
