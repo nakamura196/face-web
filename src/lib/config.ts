@@ -40,10 +40,12 @@ export interface FaceModel {
 // YuNet 2023mar (入力 [1,3,640,640] 固定 / 3-stride 出力)。public/models 同梱。
 const YUNET_URL = `${BASE}models/face_detection_yunet_2023mar.onnx`;
 
-// 顔コレ FT YOLO11x (best.pt → ONNX, dynamic入力, 単一クラス face, mAP50=0.899)。
-// 217MB のため Hugging Face から配信 (CORS 対応, 初回 DL → IndexedDB キャッシュ)。
+// 特化 YOLO11x (best.pt → ONNX, 単一クラス face)。217MB のため HF 配信
+// (CORS 対応, 初回 DL → IndexedDB キャッシュ)。
 const KAOKORE_URL =
   "https://huggingface.co/nakamura196/yolov11x-kaokore-face/resolve/main/best.onnx";
+const UKIYOE_URL =
+  "https://huggingface.co/nakamura196/yolov11x-ukiyoe-face/resolve/main/best.onnx";
 
 // --- まだ ONNX 未提供の YOLO 検出器 ---
 const COMING_SOON = "";
@@ -80,13 +82,13 @@ export const MODELS: FaceModel[] = [
     label: "浮世絵（江戸）",
     short: "浮世絵",
     emoji: "🎴",
-    detectName: "YOLO-ukiyoe（準備中）",
-    desc: "浮世絵顔データセット（江戸）で学習予定の特化検出器。大首絵など中〜大の様式化に。ONNX 提供後に有効化。",
+    detectName: "YOLO11x-ukiyoe",
+    desc: "浮世絵の顔でファインチューンした特化検出器（YOLO11x, 単一クラス face）。大首絵など中〜大の様式化に。",
     kind: "yolo",
-    detect: COMING_SOON,
-    imgsz: 640,
+    detect: UKIYOE_URL,
+    imgsz: 1536, // HF の best.onnx は入力 1536×1536 固定 (学習サイズで export)
     conf: 0.25,
-    available: false,
+    available: true,
   },
   {
     id: "ansample",
@@ -135,7 +137,7 @@ export interface Announcement {
   url?: string;
 }
 export const ANNOUNCEMENTS: Announcement[] = [
-  { date: "2026-06-19", text: "YuNet（汎用）と 顔コレ YOLO を公開しました（浮世絵／混合モデルは準備中）。" },
+  { date: "2026-06-19", text: "YuNet（汎用）・顔コレ・浮世絵 の3モデルを公開しました（混合モデルは準備中）。全モデル同時比較も可能です。" },
 ];
 
 // 使い方チュートリアル動画 (YouTube)。空なら「使い方」導線は非表示。
