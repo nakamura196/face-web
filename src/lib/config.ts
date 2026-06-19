@@ -71,7 +71,7 @@ export const MODELS: FaceModel[] = [
     desc: "顔貌コレクション（KaoKore＝中世絵巻・絵本）でファインチューンした特化検出器（YOLO11x, mAP50=0.899）。引目鉤鼻など様式化の強い前近代の顔向け。",
     kind: "yolo",
     detect: KAOKORE_URL,
-    imgsz: 1024,
+    imgsz: 1280, // HF の best.onnx は入力 1280×1280 固定 (これ以外を渡すと OrtRun が次元不一致で失敗)
     conf: 0.25,
     available: true,
   },

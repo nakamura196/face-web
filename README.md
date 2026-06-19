@@ -19,7 +19,7 @@
 | id | 種類 | 入力 | 状態 | 配信 |
 |---|---|---|---|---|
 | `yunet` | YuNet（写真学習・全層畳み込み） | 1280角に縮小 | ✅ 公開 | 同梱（227KB） |
-| `kaokore` | YOLO11x（顔コレFT, mAP50=0.899, 単一クラス face） | 1024 letterbox | ✅ 公開 | [🤗 HF](https://huggingface.co/nakamura196/yolov11x-kaokore-face) |
+| `kaokore` | YOLO11x（顔コレFT, mAP50=0.899, 単一クラス face） | 1280 letterbox | ✅ 公開 | [🤗 HF](https://huggingface.co/nakamura196/yolov11x-kaokore-face) |
 | `ukiyoe` | YOLO11x（浮世絵・江戸） | — | ⏳ 準備中 | — |
 | `ansample` | YOLO11x（3時代混合・アンサンブル） | — | ⏳ 準備中 | — |
 
